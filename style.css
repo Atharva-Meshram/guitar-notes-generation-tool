@@ -1,0 +1,279 @@
+@media (max-width: 768px) {
+
+  .app {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    height: auto;
+  }
+
+  .page {
+    transform: scale(0.6);
+    transform-origin: top center;
+  }
+
+}
+
+body {
+  font-family: Arial;
+  padding: 20px;
+}
+
+textarea {
+  width: 300px;
+  height: 80px;
+}
+
+#output {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.full-line {
+  display: flex;
+  gap: 10px; /* space between groups */
+  /* align-items: flex-start; */
+  margin-left: 40px;
+  flex-wrap: wrap; /* prevents overflow */
+}
+
+.group {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.line {
+  display: flex;
+  gap: 12px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fret {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.arrow {
+  font-size: 18px;
+  color: #555;
+}
+
+.note {
+  font-size: 14px;
+  color: red;
+}
+
+.string {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.line-block {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.lyrics {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.tabs {
+  width: 100%;
+  height: 50px;
+}
+
+/* Output styling */
+.output-line {
+  margin-bottom: 25px;
+  page-break-inside: avoid;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  border: 2px solid black; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 3px;   */
+}
+
+.connector {
+  /* margin-left: 10px;
+  margin-top: -10px; */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* LEFT SIDE */
+.left-panel {
+  width: 40%;
+  padding: 20px;
+  border-right: 2px solid #ddd;
+  overflow-y: auto;
+}
+
+/* RIGHT SIDE */
+.right-panel {
+  width: 60%;
+  padding: 20px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header output */
+.output-header {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* RED BADGE */
+.scale-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+  background: red;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  height: 120px; /* reserve space for badge */
+  margin-bottom: 20px;
+}
+
+/* Badge stays top-right */
+.badge-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Title goes BELOW badge area */
+.song-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 70px; /* pushes it below badge */
+}
+
+/* badge text styling */
+.badge-note {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.badge-type {
+  font-size: 11px;
+}
+
+.badge-text {
+  font-size: 10px;
+}
+
+.page {
+  width: 794px;
+  height: 1122px;
+  background: white;
+  margin: 20px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.page-content {
+  margin-left: 40px;   /* adjust as you like */
+  margin-right: 20px;  /* optional for balance */
+}
+
+.lyrics-text {
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.line-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.line-controls button {
+  font-size: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  text-align: center;
+}

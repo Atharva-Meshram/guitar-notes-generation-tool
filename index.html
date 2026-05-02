@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guitar Notes Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- LEFT PANEL (INPUT) -->
+  <div class="left-panel">
+
+    <h2>Editor</h2>
+
+    <!-- Header Inputs -->
+    <input id="song-title" placeholder="Song Name">
+    <select id="scale-note">
+      <option value="">Note</option>
+      <option>C</option><option>C#</option><option>D</option><option>D#</option>
+      <option>E</option><option>F</option><option>F#</option><option>G</option>
+      <option>G#</option><option>A</option><option>A#</option><option>B</option>
+    </select>
+
+    <select id="scale-type">
+      <option value="">Type</option>
+      <option>Major</option>
+      <option>Minor</option>
+    </select>
+
+    <br><br>
+
+    <div id="lines-container">
+      <div class="line-block">
+        <textarea class="lyrics" placeholder="Enter lyrics (multiple lines allowed)"></textarea>
+        <textarea class="tabs" placeholder="Enter tabs like: B(1-2-3)"></textarea>
+        <div class="line-controls">
+          <button onclick="addLineBelow(this)">➕ Add Below</button>
+          <button onclick="deleteLine(this)">🗑 Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- <br>
+    <button onclick="addLine()">➕ Add Line</button> -->
+
+  </div>
+
+  <!-- RIGHT PANEL (OUTPUT) -->
+  <div class="right-panel">
+
+    <div class="toolbar">
+      <span>Preview</span>
+      <button onclick="downloadOptions()">Download</button>
+    </div>
+
+    <div id="download-modal" class="modal hidden">
+  <div class="modal-box">
+
+    <h3>Download Options</h3>
+
+    <label>
+      <input type="radio" name="download-type" value="img" checked>
+      Download as Images
+    </label>
+
+    <label>
+      <input type="radio" name="download-type" value="pdf">
+      Download as PDF
+    </label>
+
+    <br><br>
+
+    <button onclick="confirmDownload()">Download</button>
+    <button onclick="closeModal()">Cancel</button>
+
+  </div>
+</div>
+
+    <div id="output"></div>
+
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
