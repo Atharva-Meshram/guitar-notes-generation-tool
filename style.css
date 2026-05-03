@@ -376,12 +376,15 @@ input, select {
   /* 🔥 IMPORTANT: SCALE FULL PAGE */
   .page {
     width: 794px;
-    min-height: 1122px;
+    height: 1122px;
 
-    transform: scale(0.48);
+    transform: scale(0.5);
     transform-origin: top center;
 
-    margin: 0 auto 20px;
+    margin: 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
   }
 
 
