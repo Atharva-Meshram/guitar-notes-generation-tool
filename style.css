@@ -413,3 +413,19 @@ input, select {
     font-size: 16px;
   }
 }
+
+.repeat-line {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.repeat-container {
+  display: flex;
+  gap: 10px;
+}
+
+.circle.repeat {
+  background: #eee;
+  border: 2px dashed black;
+}

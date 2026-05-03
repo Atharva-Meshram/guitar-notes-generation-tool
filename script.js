@@ -22,6 +22,30 @@ function generate() {
 
   blocks.forEach((block) => {
 
+    // 🔁 HANDLE REPEAT BLOCK
+    if (block.classList.contains("repeat-block")) {
+
+      const value = block.querySelector(".repeat-input").value;
+
+      if (!value.trim()) return;
+
+      const numbers = value.split(",").map(n => n.trim());
+
+      let repeatHTML = numbers.map(num => `
+        <div class="circle repeat">${num}</div>
+      `).join("");
+
+      linesHTML += `
+        <div class="output-line repeat-line">
+          <div class="repeat-container">
+            ${repeatHTML}
+          </div>
+        </div>
+      `;
+
+      return;
+    }
+
     const rawLyrics = block.querySelector(".lyrics").value;
     const input = block.querySelector(".tabs").value;
 
@@ -178,6 +202,7 @@ function createLineBlock() {
 
     <div class="line-controls">
       <button onclick="addLineBelow(this)">➕ Add</button>
+      <button onclick="addRepeatBlock(this)">🔁 Add Repeat</button>
       <button onclick="deleteLine(this)">🗑 Delete</button>
     </div>
   `;
@@ -268,6 +293,26 @@ function downloadPDF(title) {
       }
     });
   });
+}
+
+function createRepeatBlock() {
+  const div = document.createElement("div");
+  div.className = "line-block repeat-block";
+
+  div.innerHTML = `
+    <input class="repeat-input" placeholder="Enter line numbers (e.g. 1,2)">
+    
+    <div class="line-controls">
+      <button onclick="addLineBelow(this)">➕ Add Below</button>
+      <button onclick="deleteLine(this)">🗑 Delete</button>
+    </div>
+  `;
+
+  return div;
+}
+
+function addRepeatBlock(btn) {
+  btn.closest(".line-block").after(createRepeatBlock());
 }
 
 // 📱 MOBILE TOGGLE
