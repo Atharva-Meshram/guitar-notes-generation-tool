@@ -374,7 +374,7 @@ input, select {
   }
 
   /* 🔥 IMPORTANT: SCALE FULL PAGE */
-  .page {
+  /* .page {
     width: 794px;
     min-height: 1122px;
 
@@ -383,6 +383,17 @@ input, select {
 
     margin: 0;
     padding: 20px;
+  } */
+
+  .page {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+
+    margin: 10px 0;
+    padding: 12px;
+
+    transform: none;          /* 🔥 IMPORTANT */
   }
 
   #output {
