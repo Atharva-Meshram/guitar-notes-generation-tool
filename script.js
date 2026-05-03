@@ -18,7 +18,19 @@ function generate() {
 
   let linesHTML = "";
 
-  blocks.forEach((block, index) => {
+  let visibleIndex = 0;
+
+  blocks.forEach((block) => {
+
+    const rawLyrics = block.querySelector(".lyrics").value;
+    const input = block.querySelector(".tabs").value;
+
+    // ❌ Skip empty lines
+    if (!rawLyrics.trim() && !input.trim()) return;
+
+    visibleIndex++;
+
+    const lyrics = rawLyrics.replace(/\n/g, "<br>");
 
     const lyrics = block.querySelector(".lyrics").value.replace(/\n/g, "<br>");
     const input = block.querySelector(".tabs").value;
@@ -55,7 +67,7 @@ function generate() {
     linesHTML += `
       <div class="output-line">
         <div class="header">
-          <div class="circle">${index + 1}</div>
+          <div class="circle">${visibleIndex}</div>
           <div class="lyrics-text">${lyrics}</div>
         </div>
 
@@ -71,7 +83,7 @@ function generate() {
       <div class="badge-container">
         <div class="scale-badge">
           <div class="badge-note">${scaleNote}</div>
-          <div class="badge-type">${scaleType.toUpperCase()}</div>
+          <div class="badge-type">${(scaleType || "").toUpperCase()}</div>
           <div class="badge-text">Scale</div>
         </div>
       </div>
@@ -302,6 +314,6 @@ function showEditor() {
 }
 
 // 🚀 INITIAL LOAD
-generate();
+// generate();
 
 window.onload = generate;
