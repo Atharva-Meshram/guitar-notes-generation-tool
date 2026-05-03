@@ -8,7 +8,7 @@ function getNote(string, fret) {
   return notes[(stringStart[string] + fret) % 12];
 }
 
-// 🔥 MAIN GENERATE
+// 🔥 MAIN GENERATE FUNCTION
 function generate() {
 
   const title = document.getElementById("song-title").value;
@@ -17,17 +17,18 @@ function generate() {
   const blocks = document.querySelectorAll(".line-block");
 
   let linesHTML = "";
-
   let visibleIndex = 0;
+  let hasAnyContent = false;
 
   blocks.forEach((block) => {
 
     const rawLyrics = block.querySelector(".lyrics").value;
     const input = block.querySelector(".tabs").value;
 
-    // ❌ Skip empty lines
+    // Skip completely empty blocks
     if (!rawLyrics.trim() && !input.trim()) return;
 
+    hasAnyContent = true;
     visibleIndex++;
 
     const lyrics = rawLyrics.replace(/\n/g, "<br>");
@@ -67,7 +68,6 @@ function generate() {
           <div class="circle">${visibleIndex}</div>
           <div class="lyrics-text">${lyrics}</div>
         </div>
-
         <div class="full-line">
           ${tabHTML}
         </div>
@@ -75,23 +75,37 @@ function generate() {
     `;
   });
 
+  // ✅ If nothing entered → show placeholder
+  if (!hasAnyContent) {
+    linesHTML = `
+      <div class="output-line">
+        <div class="header">
+          <div class="circle">1</div>
+          <div class="lyrics-text" style="opacity:0.5;">
+            (Your preview will appear here)
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   const headerHTML = `
     <div class="page-header">
       <div class="badge-container">
         <div class="scale-badge">
-          <div class="badge-note">${scaleNote}</div>
+          <div class="badge-note">${scaleNote || ""}</div>
           <div class="badge-type">${(scaleType || "").toUpperCase()}</div>
           <div class="badge-text">Scale</div>
         </div>
       </div>
-      <div class="song-title">${title}</div>
+      <div class="song-title">${title || ""}</div>
     </div>
   `;
 
   paginate(headerHTML, linesHTML);
 }
 
-// 🔥 PAGINATION (ROBUST)
+// 🔥 PAGINATION SYSTEM
 function paginate(headerHTML, linesHTML) {
 
   const PAGE_HEIGHT = 1122;
@@ -125,7 +139,7 @@ function paginate(headerHTML, linesHTML) {
       measure.querySelector(".page-content").removeChild(test);
       pages.push(current);
 
-      current = createPage(""); // no header next pages
+      current = createPage(""); // next pages no header
       measure.innerHTML = current.innerHTML;
 
       current.querySelector(".page-content").appendChild(line);
@@ -141,9 +155,8 @@ function paginate(headerHTML, linesHTML) {
 
   const output = document.getElementById("output");
   output.innerHTML = "";
-  pages.forEach(p => output.appendChild(p));
 
-  // drawConnectors();
+  pages.forEach(p => output.appendChild(p));
 }
 
 // 🔧 Create page
@@ -152,54 +165,6 @@ function createPage(headerHTML) {
   page.className = "page";
   page.innerHTML = headerHTML + `<div class="page-content"></div>`;
   return page;
-}
-
-// 🔥 CONNECTOR ENGINE
-function drawConnectors() {
-
-  document.querySelectorAll(".page").forEach(page => {
-
-    const svgOld = page.querySelector("svg");
-    if (svgOld) svgOld.remove();
-
-    const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
-    svg.style.position = "absolute";
-    svg.style.top = 0;
-    svg.style.left = 0;
-    svg.style.width = "100%";
-    svg.style.height = "100%";
-    svg.style.pointerEvents = "none";
-
-    page.appendChild(svg);
-
-    const pRect = page.getBoundingClientRect();
-
-    page.querySelectorAll(".output-line").forEach(line => {
-
-      const c = line.querySelector(".circle");
-      const t = line.querySelector(".full-line");
-
-      if (!c || !t) return;
-
-      const cr = c.getBoundingClientRect();
-      const tr = t.getBoundingClientRect();
-
-      const x1 = cr.left + cr.width/2 - pRect.left;
-      const y1 = cr.bottom - pRect.top;
-
-      const x2 = tr.left - pRect.left;
-      const y2 = tr.top - pRect.top + tr.height/2;
-
-      const path = document.createElementNS("http://www.w3.org/2000/svg","path");
-
-      path.setAttribute("d", `M ${x1} ${y1} L ${x1} ${y2} L ${x2} ${y2}`);
-      path.setAttribute("stroke","black");
-      path.setAttribute("fill","none");
-      path.setAttribute("stroke-width","2");
-
-      svg.appendChild(path);
-    });
-  });
 }
 
 // ➕ LINE CONTROLS
@@ -220,14 +185,19 @@ function createLineBlock() {
   return div;
 }
 
-function addLineBelow(btn){
+function addLineBelow(btn) {
   btn.closest(".line-block").after(createLineBlock());
   generate();
 }
 
-function deleteLine(btn){
+function deleteLine(btn) {
   const container = document.getElementById("lines-container");
-  if(container.children.length === 1) return alert("At least one line required");
+
+  if (container.children.length === 1) {
+    alert("At least one line required");
+    return;
+  }
+
   btn.closest(".line-block").remove();
   generate();
 }
@@ -235,7 +205,7 @@ function deleteLine(btn){
 // 🔄 AUTO UPDATE
 document.addEventListener("input", generate);
 
-// 📥 DOWNLOAD
+// 📥 DOWNLOAD MODAL
 function downloadOptions() {
   document.getElementById("download-modal").classList.remove("hidden");
 }
@@ -258,12 +228,12 @@ function confirmDownload() {
   closeModal();
 }
 
-function downloadPages(title){
+// 📸 IMAGE DOWNLOAD
+function downloadPages(title) {
 
   const pages = document.querySelectorAll(".page");
 
   pages.forEach((page, index) => {
-
     html2canvas(page).then(canvas => {
 
       const link = document.createElement("a");
@@ -272,14 +242,14 @@ function downloadPages(title){
       link.click();
 
     });
-
   });
 }
 
-function downloadPDF(title){
+// 📄 PDF DOWNLOAD
+function downloadPDF(title) {
 
   const pages = document.querySelectorAll(".page");
-  const pdf = new jspdf.jsPDF("p","pt","a4");
+  const pdf = new jspdf.jsPDF("p", "pt", "a4");
 
   let count = 0;
 
@@ -287,21 +257,20 @@ function downloadPDF(title){
 
     html2canvas(page).then(canvas => {
 
-      if(index > 0) pdf.addPage();
+      if (index > 0) pdf.addPage();
 
-      pdf.addImage(canvas.toDataURL(),"PNG",0,0,595,842);
+      pdf.addImage(canvas.toDataURL(), "PNG", 0, 0, 595, 842);
 
       count++;
 
-      if(count === pages.length){
+      if (count === pages.length) {
         pdf.save(`${title}-notes.pdf`);
       }
-
     });
-
   });
 }
 
+// 📱 MOBILE TOGGLE
 function showPreview() {
   document.querySelector(".app").classList.add("preview-mode");
 }
@@ -311,6 +280,4 @@ function showEditor() {
 }
 
 // 🚀 INITIAL LOAD
-// generate();
-
-window.onload = generate;
+window.addEventListener("DOMContentLoaded", generate);
