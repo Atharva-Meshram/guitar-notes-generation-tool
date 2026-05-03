@@ -32,9 +32,6 @@ function generate() {
 
     const lyrics = rawLyrics.replace(/\n/g, "<br>");
 
-    const lyrics = block.querySelector(".lyrics").value.replace(/\n/g, "<br>");
-    const input = block.querySelector(".tabs").value;
-
     const matches = [...input.matchAll(/([A-Z])\((.*?)\)/g)];
 
     let tabHTML = "";
