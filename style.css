@@ -106,19 +106,29 @@ input, select {
   }
 }
 
+.page-content {
+  margin-left: 40px;   /* increase this for more space */
+  margin-right: 20px;
+}
+
 /* HEADER */
 .page-header {
   position: relative;
   height: 120px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 /* TITLE */
 .song-title {
   font-size: 24px;
   font-weight: bold;
-  margin-top: 60px;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 /* BADGE */
@@ -129,8 +139,8 @@ input, select {
 }
 
 .scale-badge {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: red;
   color: white;
@@ -144,16 +154,16 @@ input, select {
 }
 
 .badge-note {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
 }
 
 .badge-type {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .badge-text {
-  font-size: 9px;
+  font-size: 10px;
 }
 
 /* LINES */
@@ -163,7 +173,7 @@ input, select {
 
 .header {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   align-items: flex-start;
 }
 
@@ -185,10 +195,11 @@ input, select {
 
 /* TAB LAYOUT */
 .full-line {
+  margin-top: 12px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-left: 20px;
+  margin-left: 45px;
 }
 
 .group {
