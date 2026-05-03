@@ -374,61 +374,50 @@ input, select {
   }
 
   /* 🔥 IMPORTANT: SCALE FULL PAGE */
-  /* .page {
+  .page {
     width: 794px;
     min-height: 1122px;
 
-    transform: scale(calc(100vw / 794));
-    transform-origin: top left;
+    transform: scale(0.48);
+    transform-origin: top center;
 
-    margin: 0;
-    padding: 20px;
-  } */
-
-  .page {
-    width: 100%;
-    max-width: 100%;
-    min-height: auto;
-
-    margin: 10px 0;
-    padding: 12px;
-
-    transform: none;          /* 🔥 IMPORTANT */
+    margin: 0 auto 20px;
   }
+
 
   #output {
     overflow-x: hidden;
-    font-size: 16px;
+    /* font-size: 16px; */
   }
 
   /* Slightly reduce sizes */
-  .song-title {
+  /* .song-title {
     font-size: 18px;
-  }
+  } */
 
-  .scale-badge {
+  /* .scale-badge {
     width: 60px;
     height: 60px;
-  }
+  } */
 
-  .circle {
+  /* .circle {
     width: 22px;
     height: 22px;
     font-size: 12px;
-  }
+  } */
 
-  .fret,
+  /* .fret,
   .arrow {
     font-size: 14px;
-  }
+  } */
 
-  .note {
+  /* .note {
     font-size: 11px;
-  }
+  } */
 
-  .string {
+  /* .string {
     font-size: 14px;
-  }
+  } */
 
   .toolbar {
     flex-wrap: wrap;
