@@ -101,8 +101,9 @@ input, select {
 
 /* CONTENT SPACING */
 .page-content {
-  margin-left: 50px;
-  margin-right: 20px;
+  /* margin-left: 50px;
+  margin-right: 20px; */
+  padding: 0 30px;
 }
 
 /* HEADER */
@@ -378,49 +379,21 @@ input, select {
     width: 794px;
     height: 1122px;
 
-    transform: scale(0.48);
+    transform: scale(0.5);
     transform-origin: top center;
 
     margin: 0;
     position: relative;
     left: 50%;
     transform: translateX(-50%) scale(0.5);
-  }
 
+    overflow: hidden;
+  }
 
   #output {
     overflow-x: hidden;
     /* font-size: 16px; */
   }
-
-  /* Slightly reduce sizes */
-  /* .song-title {
-    font-size: 18px;
-  } */
-
-  /* .scale-badge {
-    width: 60px;
-    height: 60px;
-  } */
-
-  /* .circle {
-    width: 22px;
-    height: 22px;
-    font-size: 12px;
-  } */
-
-  /* .fret,
-  .arrow {
-    font-size: 14px;
-  } */
-
-  /* .note {
-    font-size: 11px;
-  } */
-
-  /* .string {
-    font-size: 14px;
-  } */
 
   .toolbar {
     flex-wrap: wrap;
