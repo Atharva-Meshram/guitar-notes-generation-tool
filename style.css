@@ -101,9 +101,8 @@ input, select {
 
 /* CONTENT SPACING */
 .page-content {
-  /* margin-left: 50px;
-  margin-right: 20px; */
-  padding: 0 30px;
+  margin-left: 50px;
+  margin-right: 20px;
 }
 
 /* HEADER */
@@ -385,9 +384,7 @@ input, select {
     margin: 0;
     position: relative;
     left: 50%;
-    transform: translateX(-50%) scale(0.5);
-
-    overflow: hidden;
+    transform: translateX(-50%) scale(0.48);
   }
 
   #output {
