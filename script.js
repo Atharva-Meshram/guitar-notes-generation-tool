@@ -25,11 +25,21 @@ function generate() {
     // 🔁 HANDLE REPEAT BLOCK
     if (block.classList.contains("repeat-block")) {
 
-      const value = block.querySelector(".repeat-input").value;
+      const inputEl = block.querySelector(".repeat-input");
+      const value = inputEl.value;
 
       if (!value.trim()) return;
 
-      const numbers = value.split(",").map(n => n.trim());
+      // 🚫 STOP if error exists
+      const errorEl = inputEl.nextElementSibling;
+      if (errorEl && errorEl.textContent.trim() !== "") {
+        return; // ❌ don't render invalid repeat
+      }
+
+      const numbers = value
+      .split(",")
+      .map(n => parseInt(n.trim()))
+      .filter(n => !isNaN(n));
 
       let repeatHTML = numbers.map(num => `
         <div class="circle repeat">${num}</div>
@@ -113,18 +123,31 @@ function generate() {
     `;
   }
 
+  const bpm = document.getElementById("bpm").value;
+  const beat = document.getElementById("beat-type").value;
+
   const headerHTML = `
-    <div class="page-header">
-      <div class="badge-container">
-        <div class="scale-badge">
-          <div class="badge-note">${scaleNote || ""}</div>
-          <div class="badge-type">${(scaleType || "").toUpperCase()}</div>
-          <div class="badge-text">Scale</div>
-        </div>
+  <div class="page-header">
+
+    <div class="badge-container">
+
+      <div class="tempo-info">
+        ${bpm ? `<div><strong>BPM:</strong> ${bpm}</div>` : ""}
+        ${beat ? `<div><strong>Beat:</strong> ${beat}</div>` : ""}
       </div>
-      <div class="song-title">${title || ""}</div>
+
+      <div class="scale-badge">
+        <div class="badge-note">${scaleNote || ""}</div>
+        <div class="badge-type">${(scaleType || "").toUpperCase()}</div>
+        <div class="badge-text">Scale</div>
+      </div>
+
     </div>
-  `;
+
+    <div class="song-title">${title || ""}</div>
+
+  </div>
+`;
 
   paginate(headerHTML, linesHTML);
 }
@@ -308,6 +331,20 @@ function createRepeatBlock() {
     </div>
   `;
 
+  // ✅ ADD THIS PART HERE
+  const input = div.querySelector(".repeat-input");
+
+  input.addEventListener("input", () => {
+
+    const allBlocks = [...document.querySelectorAll(".line-block")];
+
+    const currentIndex = allBlocks.indexOf(div) + 1;
+
+    const totalLines = allBlocks.filter(b => !b.classList.contains("repeat-block")).length;
+
+    validateRepeatInput(input, currentIndex, totalLines);
+  });
+
   return div;
 }
 
@@ -322,6 +359,47 @@ function showPreview() {
 
 function showEditor() {
   document.querySelector(".app").classList.remove("preview-mode");
+}
+
+function validateRepeatInput(inputEl, currentIndex, maxIndex) {
+
+  const values = inputEl.value.split(",").map(v => parseInt(v.trim()));
+
+  let error = "";
+
+  for (let val of values) {
+
+    if (!val) continue;
+
+    if (val > maxIndex) {
+      error = "Line doesn't exist";
+      break;
+    }
+
+    if (val >= currentIndex) {
+      error = "Use of future line";
+      break;
+    }
+  }
+
+  if (!error) {
+    showError(inputEl, "");
+  } else {
+    showError(inputEl, error);
+  }
+}
+
+function showError(inputEl, message) {
+
+  let errorEl = inputEl.nextElementSibling;
+
+  if (!errorEl || !errorEl.classList.contains("error-text")) {
+    errorEl = document.createElement("div");
+    errorEl.className = "error-text";
+    inputEl.after(errorEl);
+  }
+
+  errorEl.textContent = message;
 }
 
 // 🚀 INITIAL LOAD

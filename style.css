@@ -126,6 +126,10 @@ input, select {
   position: absolute;
   top: 0;
   right: 0;
+
+  display: flex;        /* 🔥 KEY */
+  align-items: center;  /* vertical alignment */
+  gap: 10px;            /* space between BPM and badge */
 }
 
 .scale-badge {
@@ -333,6 +337,27 @@ input, select {
 .circle.repeat {
   background: #eee;
   border: 2px dashed black;
+}
+
+.top-row {
+  display: flex;
+  justify-content: flex-end; /* push everything right */
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
+}
+
+.tempo-info {
+  text-align: right;
+  font-size: 12px;   /* 🔥 reduce size */
+  line-height: 1.3;
+  color: #333;       /* optional: softer than pure black */
+}
+
+.error-text {
+  color: red;
+  font-size: 16px;
+  margin-top: 4px;
 }
 
 /* ========================= */
