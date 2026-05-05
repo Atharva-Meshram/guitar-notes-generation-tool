@@ -384,7 +384,7 @@ input, select {
     margin: 0;
     position: relative;
     left: 50%;
-    transform: translateX(-50%) scale(0.48);
+    transform: translateX(-50%) scale(0.47);
   }
 
   #output {
