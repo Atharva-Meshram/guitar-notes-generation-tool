@@ -60,6 +60,11 @@ input, select {
   padding: 10px;
   margin-bottom: 10px;
   background: #fafafa;
+  cursor: grab;
+}
+
+.line-block:active {
+  cursor: grabbing;
 }
 
 /* LINE CONTROLS */

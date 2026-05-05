@@ -218,6 +218,7 @@ function createPage(headerHTML) {
 function createLineBlock() {
   const div = document.createElement("div");
   div.className = "line-block";
+  div.setAttribute("draggable", "true");
 
   div.innerHTML = `
     <textarea class="lyrics" placeholder="Lyrics"></textarea>
@@ -401,6 +402,45 @@ function showError(inputEl, message) {
 
   errorEl.textContent = message;
 }
+
+/* ========================= */
+/* 🔥 DRAG & DROP (ADD HERE) */
+/* ========================= */
+
+let draggedItem = null;
+
+document.addEventListener("dragstart", (e) => {
+  if (e.target.classList.contains("line-block")) {
+    draggedItem = e.target;
+  }
+});
+
+document.addEventListener("dragover", (e) => {
+  e.preventDefault();
+});
+
+document.addEventListener("drop", (e) => {
+  if (!draggedItem) return;
+
+  const target = e.target.closest(".line-block");
+  if (!target || target === draggedItem) return;
+
+  const container = document.getElementById("lines-container");
+
+  const children = [...container.children];
+  const draggedIndex = children.indexOf(draggedItem);
+  const targetIndex = children.indexOf(target);
+
+  if (draggedIndex < targetIndex) {
+    target.after(draggedItem);
+  } else {
+    target.before(draggedItem);
+  }
+
+  draggedItem = null;
+
+  generate(); // 🔥 update preview
+});
 
 // 🚀 INITIAL LOAD
 window.addEventListener("DOMContentLoaded", generate);
